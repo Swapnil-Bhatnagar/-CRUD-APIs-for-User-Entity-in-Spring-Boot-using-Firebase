@@ -1,13 +1,9 @@
-## Firebase Authentication and Firestore Integration in Spring Boot
-##### A reference proof-of-concept that leverages [Firestore Database](https://firebase.google.com/docs/firestore) to perform CRUD operations and  [Firebase Authentication](https://firebase.google.com/docs/auth) with Spring-Security to authenticate users. 
-##### 🛠 upgraded to Spring Boot 3 and Spring Security 6 🛠 
+ CRUD APIs for User Entity in Spring Boot using Firebase
+A reference proof-of-concept that leverages [Firestore Database](https://firebase.google.com/docs/firestore) to perform CRUD operations and  [Firebase Authentication](https://firebase.google.com/docs/auth) with Spring-Security to authenticate users. 
 
-### Application Flow and Security Configuration
+ Application Flow and Security Configuration
 
-The project simulates a rudimentary Task Management Application.
 
-API endpoints dealing with user account creation and login credentials validation are made public, by annotating their corresponding controller methods with custom annotation [@PublicEndpoint](https://github.com/hardikSinghBehl/firebase-integration-spring-boot/blob/main/src/main/java/com/behl/flare/configuration/PublicEndpoint.java).
-Requests to the configured API paths will not be evaluated by the Security filter with the logic being governed by [ApiEndpointSecurityInspector](https://github.com/hardikSinghBehl/firebase-integration-spring-boot/blob/main/src/main/java/com/behl/flare/utility/ApiEndpointSecurityInspector.java).
 
 Below is a sample controller method declared as public which will be exempted from authentication checks:
 
@@ -37,10 +33,7 @@ In the event of authentication failure, when the access token received in the HT
   "Status": "401 UNAUTHORIZED",
   "Description": "Authentication failure: Token missing, invalid or expired"
 }
-```
-The above JSON response is dispatched to the client as a result of [CustomAuthenticationEntryPoint](https://github.com/hardikSinghBehl/firebase-integration-spring-boot/blob/main/src/main/java/com/behl/flare/configuration/CustomAuthenticationEntryPoint.java) configured within the [SecurityConfiguration](https://github.com/hardikSinghBehl/firebase-integration-spring-boot/blob/main/src/main/java/com/behl/flare/configuration/SecurityConfiguration.java) which assumes any exception thrown by the Security filter is due to token verification failure. Hence, the implementation instantiates [TokenVerificationException](https://github.com/hardikSinghBehl/firebase-integration-spring-boot/blob/main/src/main/java/com/behl/flare/exception/TokenVerificationException.java) and delegates the responsibility of exception handling to [ExceptionResponseHandler](https://github.com/hardikSinghBehl/firebase-integration-spring-boot/blob/main/src/main/java/com/behl/flare/exception/ExceptionResponseHandler.java).
- 
----
+
 
 ### Local Setup
 
@@ -79,8 +72,4 @@ unset FIREBASE_PRIVATE_KEY
 unset FIREBASE_WEB_API_KEY
 ```
 
----
 
-### Visual Walkthrough
-
-https://github.com/hardikSinghBehl/firebase-integration-spring-boot/assets/69693621/293d23f5-6783-4f1a-82c2-445532a67384
